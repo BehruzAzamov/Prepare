@@ -1,28 +1,42 @@
-import { useSelector } from "react-redux"
-import { useEffect, useState } from 'react'
-import { Link } from "react-router-dom"
+import { useSelector } from "react-redux";
+import { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 
+const themes = {
+  winter: "winter",
+  dracula: "dracula",
+};
+
+function LocalStorageTheme() {
+  return localStorage.getItem("mode") || themes.winter;
+}
 
 function Navbar() {
-  const [isDarkTheme, setIsDarkTheme] = useState(localStorage.getItem('dark-mode') === 'true' ?? false)
+  const [theme, setTheme] = useState(LocalStorageTheme());
+  const [weather, setWeather] = useState(null);
+  const [location, setLocation] = useState(null);
+  const [error, setError] = useState(null);
 
-  function toggleTheme() {
-    setIsDarkTheme(prevTheme => !prevTheme)
+  function handleClick() {
+    const newTheme = theme === themes.winter ? themes.dracula : themes.winter;
+    setTheme(newTheme);
   }
 
   useEffect(() => {
-    document.documentElement.className = isDarkTheme ? 'dark' : ''
-    localStorage.setItem('dark-mode', isDarkTheme)
-  }, [isDarkTheme])
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("mode", theme);
+  }, [theme]);
 
-  const { user } = useSelector(state => state.currentUser)
+  const { user } = useSelector(state => state.currentUser);
 
-
+  
   return (
-    <div className="navbar  bg-base-100">
-      <div className="flex-1">
-        <h4 className='text-3xl font-bold mb-3'>Recipies app</h4>
+    <div className="navbar">
+      <div className="navbar-start flex-1">
+        <h4 className='text-3xl font-bold mb-3'>Recipes app</h4>
       </div>
+
+
       <div className="flex-none">
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
@@ -31,7 +45,7 @@ function Navbar() {
               <span className="badge badge-sm indicator-item">8</span>
             </div>
           </div>
-          <div tabIndex={0} className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow">
+          <div tabIndex={0} className="mt-3 z-a[1] card card-compact dropdown-content w-52 bg-base-100 shadow">
             <div className="card-body">
               <span className="font-bold text-lg">8 Items</span>
               <span className="text-info">Subtotal: $999</span>
@@ -45,7 +59,7 @@ function Navbar() {
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
-              <img alt="Tailwind CSS Navbar component" src={user.photoURL} />
+              <img alt="Avatar" src={user.photoURL} />
             </div>
           </div>
           <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
@@ -56,14 +70,14 @@ function Navbar() {
               <Link to="/create">Create recipe</Link>
             </li>
             <li>
-              <button>Change theme</button>
+              <button onClick={handleClick}>Change theme</button>
             </li>
             <li><a>Logout</a></li>
           </ul>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

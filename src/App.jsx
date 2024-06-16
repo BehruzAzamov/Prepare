@@ -6,7 +6,6 @@ import { isAuthReady, login } from "./features/userSlice";
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import { action as registerAction } from "./pages/Register";
 import { action as loginAction } from "./pages/Login";
-import MainLayout from "./layout/MainLayout";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -14,6 +13,7 @@ import Home from "./pages/Home";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import CreateRecipe from "./pages/CreateRecipe";
 import SingleRecipe from "./pages/SingleRecipe";
+import  VideoBg from "./components/VideoBg"
 
 function App() {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ function App() {
   const routes = createBrowserRouter([
     {
       path: '/',
-      element: <ProtectedRoutes user={user}><MainLayout /></ProtectedRoutes>,
+      element: <ProtectedRoutes user={user}><VideoBg /></ProtectedRoutes>,
       children: [
         { index: true, element: <Home /> },
         { path: '/create', element: <CreateRecipe /> },

@@ -8,7 +8,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 function SingleRecipe() {
     const { id } = useParams();
     const [recipe, setRecipe] = useState(null);
-
+    
     useEffect(() => {
         const fetchRecipe = async () => {
             try {
@@ -23,35 +23,38 @@ function SingleRecipe() {
                 console.error("Error getting document:", error);
             }
         };
-
+        
         fetchRecipe();
     }, [id]);
-
+    
     if (!recipe) {
         return <div>Loading...</div>;
     }
-
+    console.log(recipe);
     return (
         <div>
-            <h1>{recipe.title}</h1>
-            <p>Cooking Time: {recipe.cookingTime}</p>
-            {recipe.images && (
-                <Carousel>
-                    {recipe.images.map((image, index) => (
-                        <div key={index}>
-                            <img className="w-full h-1/2" src={image} alt={`Image ${index}`} />
-                        </div>
-                    ))}
-                </Carousel>
-            )}
+        <h1 className="text-6xl">{recipe.title}</h1>
+        {recipe.images && (
+            <Carousel>
+            {recipe.images.map((image, index) => (
+                <div key={index}>
+                <img className="w-1/2  h-1/2" src={image} alt={`Image ${index}`} />
+                </div>
+            ))}
+            </Carousel>
+        )}
+        
+        <p className="text-xl">Cooking Time: {recipe.cookingTime}</p>
+        <div className="flex text-xl">
             <h2>Ingredients:</h2>
-            <ul>
-                {recipe.ingredients && recipe.ingredients.map((ingredient, index) => (
-                    <li key={index}>{ingredient}</li>
-                ))}
+            <ul className=" flex">
+            {recipe.ingredients && recipe.ingredients.map((ingredient, index) => (
+                <li key={index}>{ingredient},</li>
+            ))}
             </ul>
-            <h2>Method:</h2>
-            <p>{recipe.description}</p>
+        </div>
+        <h2 className="text-xl">Method:</h2>
+        <p>{recipe.description}</p>
         </div>
     );
 }
