@@ -6,7 +6,6 @@ import { isAuthReady, login } from "./features/userSlice";
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import { action as registerAction } from "./pages/Register";
 import { action as loginAction } from "./pages/Login";
-
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
