@@ -157,11 +157,11 @@ function CreateRecipe() {
           className="textarea textarea-bordered w-full"
         ></textarea>
       </label>
-      <div className="btns flex gap-x-5">
-        <button type="submit" className="btn btn-info w-96">
+      <div className="btns w-full flex gap-x-5">
+        <button type="submit" className="btn w-1/2 btn-info">
           Apply
         </button>
-        <button className="btn btn-success w-96">Preview</button>
+        <button className="btn w-1/2 btn-success ">Preview</button>
       </div>
     </form>
   );
